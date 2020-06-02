@@ -41,6 +41,9 @@ namespace AccountManager.Controllers
                 return RedirectToAction("Index");
             }
 
+            int verificationCode = new Random().Next(100000, 999999);
+            EmailManager.SendEmail(email, "greeting", login, verificationCode.ToString());
+
             return Content("User \"" + login + "\" has been successfully registered.");
         }
     }
