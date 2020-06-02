@@ -1,0 +1,86 @@
+body 
+{
+    background-image: url("padlock_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment:fixed;
+    font-family: Consolas,monaco,monospace;
+    color: white;
+}
+
+main
+{
+    width: 60%;
+    height: auto;
+    margin-left: 20%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius:25px;
+}
+
+
+#padlock
+{
+    width:15%;
+    height:15%;
+}
+
+a, a:hover
+{
+    color:white;
+}
+
+img
+{
+    margin-left: 2%;
+}
+
+h1, h2
+{
+    font-weight: 800;
+}
+
+h3, h4
+{
+    margin-left:2%;
+}
+
+form
+{
+    margin-left: 30%;
+    margin-bottom: 5%;
+}
+
+#add_acc_btn, #export_btn, #settings_btn
+{
+    margin-left:2%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+
+.table, .table:hover
+{
+    color:white;
+}
+
+.btn_from_settings
+{
+    margin-left: 2%;
+}
+
+#back_btn
+{
+    margin-left: 85%;
+}
+
+
+footer 
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #6bffc4;
+    border-radius: 25px;
+}
