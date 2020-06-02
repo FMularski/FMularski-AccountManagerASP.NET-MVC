@@ -1,24 +1,73 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    background-image: url(img/padlock_bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: Consolas,monaco,monospace;
+    color: white;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+main {
+    width: 60%;
+    height: auto;
+    margin-left: 20%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+
+#padlock {
+    width: 15%;
+    height: 15%;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+a, a:hover {
+    color: white;
+}
+
+img {
+    margin-left: 2%;
+}
+
+h1, h2 {
+    font-weight: 800;
+}
+
+h3, h4 {
+    margin-left: 2%;
+}
+
+form {
+    margin-left: 30%;
+    margin-bottom: 5%;
+}
+
+#add_acc_btn, #export_btn, #settings_btn {
+    margin-left: 2%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+
+.table, .table:hover {
+    color: white;
+}
+
+.btn_from_settings {
+    margin-left: 2%;
+}
+
+#back_btn {
+    margin-left: 85%;
+}
+
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #6bffc4;
+    border-radius: 25px;
 }
