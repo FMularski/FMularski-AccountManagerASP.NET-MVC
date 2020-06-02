@@ -61,5 +61,44 @@ namespace AccountManager.Controllers
             MessageBox.Show("User \"" + login + "\" has been successfully registered.", "Registration successful");
             return RedirectToAction("Index");
         }
+
+        public ActionResult Remind()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Remind(string login, string email)
+        {
+            if (Context.Users.SingleOrDefault(u => u.Login == login) == null)
+            {
+                MessageBox.Show("Invalid login.", "Error");
+                return RedirectToAction("Remind");
+            }
+
+            if ( !Context.Users.Single(u => u.Login == login).Email.Equals(email)) // if login does not match email
+            {
+                MessageBox.Show("Login does not match inserted email.", "Error");
+                return RedirectToAction("Remind");
+            }
+
+            string verificationCode = new Random().Next(100000, 999999).ToString();
+            EmailManager.SendEmail(email, "forgot", login, verificationCode);
+
+            string code = Interaction.InputBox("A verification code has been sent to " +
+               "your email address. Enter it in order to receive a reminder for your password.",
+               "Password reminder requested", "", 1, 1);
+
+            if (!code.Equals(verificationCode))
+            {
+                MessageBox.Show("Invalid verification code, please try again.", "Invalid verification code.");
+                return RedirectToAction("Remind");
+            }
+
+            EmailManager.SendEmail(email, "reminder", Context.Users.Single(u => u.Login == login).Password);
+            MessageBox.Show("Your password reminder request has been accepted. You will receive an email with your password.", "Success");
+
+            return RedirectToAction("Index");
+        }
     }
 }
