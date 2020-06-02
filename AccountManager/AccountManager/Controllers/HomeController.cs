@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 
 namespace AccountManager.Controllers
 {
@@ -23,7 +24,7 @@ namespace AccountManager.Controllers
 
         public ActionResult Register(string login, string email, string password, string confirm, string pin)
         {
-            if( Context.Users.SingleOrDefault(u => u.Login == login) != null)    // found user with given login = login used
+            if ( Context.Users.SingleOrDefault(u => u.Login == login) != null)    // found user with given login = login used
             {
                 MessageBox.Show("Login \"" + login + "\" is already used.", "Login used");
                 return RedirectToAction("Index");
@@ -41,10 +42,24 @@ namespace AccountManager.Controllers
                 return RedirectToAction("Index");
             }
 
-            int verificationCode = new Random().Next(100000, 999999);
-            EmailManager.SendEmail(email, "greeting", login, verificationCode.ToString());
+            string verificationCode = new Random().Next(100000, 999999).ToString();
+            EmailManager.SendEmail(email, "greeting", login, verificationCode);
 
-            return Content("User \"" + login + "\" has been successfully registered.");
+            string code = Interaction.InputBox("A verification code has been sent to " +
+               "your email address. Enter it in order to verify your email account and proceed with the registration.",
+               "Authorization", "", 1, 1);
+
+            if ( !code.Equals(verificationCode))
+            {
+                MessageBox.Show("Invalid verification code, please try again.", "Invalid verification code.");
+                return RedirectToAction("Index");
+            }
+
+            Context.Users.Add(new User { Login = login, Email = email, Password = password, Pin = pin });
+            Context.SaveChanges();
+
+            MessageBox.Show("User \"" + login + "\" has been successfully registered.", "Registration successful");
+            return RedirectToAction("Index");
         }
     }
 }
