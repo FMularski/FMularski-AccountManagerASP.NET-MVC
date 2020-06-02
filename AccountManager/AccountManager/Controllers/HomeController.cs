@@ -100,5 +100,23 @@ namespace AccountManager.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Login(string login, string password)
+        {
+            if (Context.Users.SingleOrDefault(u => u.Login == login) == null)
+            {
+                MessageBox.Show("Invalid login.", "Error");
+                return RedirectToAction("Index");
+            }
+
+            if ( !Context.Users.Single(u => u.Login == login).Password.Equals(password))
+            {
+                MessageBox.Show("Invalid password.", "Error");
+                return RedirectToAction("Index");
+            }
+
+            EmailManager.SendEmail(Context.Users.Single(u => u.Login == login).Email, "alert", login, DateTime.Now.ToString());
+            return RedirectToAction("Index", "Main");
+        }
     }
 }
