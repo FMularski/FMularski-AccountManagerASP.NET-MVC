@@ -101,6 +101,7 @@ namespace AccountManager.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         public ActionResult Login(string login, string password)
         {
             if (Context.Users.SingleOrDefault(u => u.Login == login) == null)
@@ -116,6 +117,9 @@ namespace AccountManager.Controllers
             }
 
             EmailManager.SendEmail(Context.Users.Single(u => u.Login == login).Email, "alert", login, DateTime.Now.ToString());
+
+            TempData["login"] = login;
+
             return RedirectToAction("Index", "Main");
         }
     }

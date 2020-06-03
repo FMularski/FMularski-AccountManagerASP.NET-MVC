@@ -9,6 +9,7 @@ namespace AccountManager
     public class AccountManagerContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
         public AccountManagerContext() : base("name=AccountManager") { }
     }
