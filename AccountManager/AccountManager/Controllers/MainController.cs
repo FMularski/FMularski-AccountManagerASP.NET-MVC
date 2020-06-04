@@ -246,5 +246,11 @@ namespace AccountManager.Controllers
 
             return RedirectToAction("Index", mvm);
         }
+
+        public ActionResult OpenSettings()
+        {
+            TempData["login"] = Login;
+            return RedirectToAction("Index", "Settings");
+        }
     }
 }

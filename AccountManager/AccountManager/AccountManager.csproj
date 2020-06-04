@@ -132,6 +132,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="EmailManager.cs" />
     <Compile Include="EmailManagerAccountData.cs" />
     <Compile Include="Global.asax.cs">
@@ -153,6 +154,7 @@
     <Compile Include="Models\AccountFormViewModel.cs" />
     <Compile Include="Models\MainViewModel.cs" />
     <Compile Include="Models\NewAccountViewModel.cs" />
+    <Compile Include="Models\SettingsViewModel.cs" />
     <Compile Include="Models\ShowPasswordViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
@@ -196,6 +198,7 @@
     <Content Include="Views\Main\ShowPassword.cshtml" />
     <Content Include="Views\Main\AccountForm.cshtml" />
     <Content Include="Views\Main\NewAccountForm.cshtml" />
+    <Content Include="Views\Settings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
