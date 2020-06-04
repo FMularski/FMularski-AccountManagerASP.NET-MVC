@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -169,6 +170,73 @@ namespace AccountManager.Controllers
             Account newAccount = new Account { Title = title, Login = login, Email = email, Password = password, UserId = user.Id };
             Context.Accounts.Add(newAccount);
             Context.SaveChanges();
+
+            MainViewModel mvm = new MainViewModel
+            {
+                Login = user.Login,
+                Accounts = Context.Accounts.Where(a => a.UserId == user.Id).ToList()
+            };
+
+            return RedirectToAction("Index", mvm);
+        }
+
+        public ActionResult Export()
+        {
+            User user = Context.Users.Single(u => u.Login == Login);
+
+
+            string verificationCode = new Random().Next(100000, 999999).ToString();
+            EmailManager.SendEmail(user.Email, "export", user.Login, verificationCode);
+
+            string code = Interaction.InputBox("A verification code has been sent to " +
+               "your email address. Enter it in order to export your data.",
+               "Authorization", "", 1, 1);
+
+            if ( code.Equals(verificationCode))
+            {
+                List<Account> accounts = Context.Accounts.Where(a => a.UserId == user.Id).ToList();
+
+                List<string> titles = new List<string>();
+                List<string> logins = new List<string>();
+                List<string> emails = new List<string>();
+                List<string> passwords = new List<string>();
+
+                foreach ( Account account in accounts)
+                {
+                    titles.Add(account.Title);
+                    logins.Add(account.Login);
+                    emails.Add(account.Email);
+                    passwords.Add(account.Password);
+                }
+
+                try
+                {
+                    using (StreamWriter sw = new StreamWriter(Server.MapPath("~/export.txt")))
+                    {
+                        for (int i = 0; i < titles.Count; i++)
+                        {
+                            string accountRowForFile = "Title: " + titles[i] + "\tLogin: " + logins[i] + "\tAssociated email: " +
+                                emails[i] + "\tPassword: " + passwords[i];
+
+                            sw.WriteLine(accountRowForFile);
+                        }
+                    }
+
+
+                    Response.ContentType = "text/plain";
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=export.txt");
+                    Response.TransmitFile(Server.MapPath("~/export.txt"));
+                    Response.End();
+
+                    MessageBox.Show("Your data has been successfully exported.\n\nWarning: The exported file contains all of your accounts data. Be cautious when granting access to this file. Deleting the file\nfrom widely accessible disk space is recommended.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Export has been cancelled.", "Export cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+                MessageBox.Show("Invalid verification code, please try again.", "Invalid verification code.");
 
             MainViewModel mvm = new MainViewModel
             {

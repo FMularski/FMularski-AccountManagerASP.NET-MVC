@@ -360,3 +360,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 AccountManager/AccountManager/EmailManagerAccountData.cs
+AccountManager/AccountManager/export.txt
