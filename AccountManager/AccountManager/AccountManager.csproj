@@ -199,6 +199,8 @@
     <Content Include="Views\Main\AccountForm.cshtml" />
     <Content Include="Views\Main\NewAccountForm.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Settings\ChangePassword.cshtml" />
+    <Content Include="Views\Settings\ChangePin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

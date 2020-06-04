@@ -1,7 +1,4 @@
-﻿@using AccountManager.Models;
-@model AccountManager.Models.SettingsViewModel
-
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -19,15 +16,18 @@
         <img src="~/Content/img/logo.png" />
         <img id="padlock" src="~/Content/img/padlock.gif" />
 
-        <h3>Logged in as <b>@Model.UserLogin </b></h3>
-        <h3>Settings</h3>
-
-        <h4>Security</h4>
-        <a href="@Url.Action("ChangePassword", "Settings")" class="btn btn-outline-light w-25 btn_from_settings">Change password</a> <span>You can change your password here.</span> <br />
-        <a href="@Url.Action("ChangePin", "Settings")" class="btn btn-outline-light w-25 btn_from_settings">Change PIN</a> <span>You can change your PIN here.</span> <br /><br />
-
-        <h4>Other</h4>
-        <a href="@Url.Action("LogOut", "Settings")" class="btn btn-outline-danger w-25 btn_from_settings">Log Out</a> <span>Here you can log out if you want to use another Account Manager account.</span> <br /><br /><br /><br /><br /><br />
+        <form action="@Url.Action("ChangePin","Settings")" , method="post">
+            <h1>Change PIN</h1>
+            <div class="form-group">
+                <label>New PIN:</label>
+                <input type="password" name="pin" class="form-control w-50" required>
+            </div>
+            <div class="form-group">
+                <label>Confirm PIN:</label>
+                <input name="confirm" type="password" class="form-control w-50" required>
+            </div>
+            <button type="submit" class="btn btn-outline-info w-50">Change</button><br/><br/>
+        </form>
 
     </main>
 
