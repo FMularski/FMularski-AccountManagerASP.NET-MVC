@@ -127,7 +127,7 @@ namespace AccountManager.Controllers
                 Accounts = Context.Accounts.Where(a => a.UserId == user.Id).ToList()
             };
 
-            return View("Index", mvm);
+            return RedirectToAction("Index", mvm);
         }
 
         public ActionResult Delete(int id)

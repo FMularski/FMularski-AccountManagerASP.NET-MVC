@@ -54,7 +54,7 @@ namespace AccountManager.Controllers
                 MessageBox.Show("Invalid verification code, please try again.", "Invalid verification code.");
                 SettingsViewModel svm = new SettingsViewModel { UserLogin = Login };
 
-                return View("Index", svm);
+                return RedirectToAction("Index", svm);
             }
         }
 
@@ -76,7 +76,7 @@ namespace AccountManager.Controllers
                 MessageBox.Show("Password has been successfully changed.", "Success");
             }
 
-            return View("Index", svm);
+            return RedirectToAction("Index", svm);
         }
 
         [HttpGet]
@@ -100,7 +100,7 @@ namespace AccountManager.Controllers
                 MessageBox.Show("Invalid verification code, please try again.", "Invalid verification code.");
                 SettingsViewModel svm = new SettingsViewModel { UserLogin = Login };
 
-                return View("Index", svm);
+                return RedirectToAction("Index", svm);
             }
         }
 
@@ -122,7 +122,34 @@ namespace AccountManager.Controllers
                 MessageBox.Show("PIN has been successfully changed.", "Success");
             }
 
-            return View("Index", svm);
+            return RedirectToAction("Index", svm);
+        }
+
+        public ActionResult LogOut()
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                SettingsViewModel svm = new SettingsViewModel { UserLogin = Login };
+                return RedirectToAction("Index", svm);
+            }
+        }
+
+        public ActionResult Back()
+        {
+            User user = Context.Users.Single(u => u.Login == Login);
+
+            MainViewModel mvm = new MainViewModel
+            {
+                Login = user.Login,
+                Accounts = Context.Accounts.Where(a => a.UserId == user.Id).ToList()
+            };
+
+            return RedirectToAction("Index", "Main", mvm);
         }
     }
 }
