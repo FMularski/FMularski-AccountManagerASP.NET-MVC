@@ -71,6 +71,19 @@ namespace AccountManager.Controllers
             return View("ShowPassword", spvm);
         }
 
+        public ActionResult Back()
+        {
+            User user = Context.Users.Single(u => u.Login == Login);
+
+            MainViewModel mvm = new MainViewModel
+            {
+                Login = user.Login,
+                Accounts = Context.Accounts.Where(a => a.UserId == user.Id).ToList()
+            };
+
+            return RedirectToAction("Index", mvm);
+        }
+
         [HttpGet]
         public ActionResult Edit(int id)
         {

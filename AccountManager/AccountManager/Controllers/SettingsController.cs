@@ -63,6 +63,12 @@ namespace AccountManager.Controllers
         {
             SettingsViewModel svm = new SettingsViewModel { UserLogin = Login };
 
+            if (password.Length < 8)
+            {
+                MessageBox.Show("Password must be at least 8 characters long.", "Password too short");
+                return View("ChangePassword");
+            }
+
             if (!password.Equals(confirm))
             {
                 MessageBox.Show("New password and password confirmation do not match.", "Error");
